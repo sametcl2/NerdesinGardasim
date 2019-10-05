@@ -9,6 +9,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import io.radar.sdk.Radar;
 
 import com.airbnb.android.react.maps.MapsPackage; 
 
@@ -49,6 +50,8 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this); // Remove this line if you don't want Flipper enabled
+    String key = "prj_test_pk_fef995ae4cdd3cedf2d9195b9596b857b7f1bb08";
+    Radar.initialize(key);
   }
 
   /**

@@ -1,56 +1,57 @@
 import React from 'react';
 import { StyleSheet, View, PermissionsAndroid } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-import BackgroundGeolocation from "react-native-background-geolocation";
+import Radar from 'react-native-radar';
 
 class App extends React.Component {
   constructor() {
     super();
     this.state={
-      latitude: 0,
-      longitude: 0,
+      region: {
+        latitude: 41.020912,
+        longitude: 28.934603,
+        latitudeDelta: 2.0922,
+        longitudeDelta: 2.0421
+      }
     }
   };
-
+  
   componentWillMount() {
-    PermissionsAndroid.check(PermissionsAndroid.ACCESS_FINE_LOCATION)
-      .then(response => response ? null : this.requestLocation())
-    BackgroundGeolocation.getCurrentPosition({
-      timeout: 30, // 30 second timeout to fetch location
-      persist: true, // Defaults to state.enabled
-      maximumAge: 5000, // Accept the last-known-location if not older than 5000 ms.
-      desiredAccuracy: 10, // Try to fetch a location with an accuracy of `10` meters.
-      samples: 3, // How many location samples to attempt.
-      extras: {
-        // Custom meta-data.
-        route_id: 123,
-      },
-    })
-    .then(currentLocation => {
-      this.setState({
-        latitude: currentLocation["coords"].latitude,
-        longitude: currenLocation["coords"].longitude,
-      })
-    })
-  } 
+    Radar.getPermissionsStatus()
+      .then(status => status == 'DENIED' && this.requestLocation())  
+      
+      Radar.setUserId(this.state.userId);
+      Radar.requestPermissions(true);
+  
+      Radar.trackOnce().then((result) => {
+        this.setState({
+          region: {
+            ...this.state.region,
+            longitude: result.user.geofences.longitude,
+            latitude: result.user.geofences.latitude
+          }
+        }, console.warn(this.state.region))
+        console.warn(result.user.geofences)
+      }).catch((err) => {
+        console.warn(err)
+      });
+  }
 
-  setRegion = () => ({
-    latitude: this.state.latitude,
-    longitude: this.state.longitude,
-    latitudeDelta: LATITUDE_DELTA,
-    longitudeDelta: LONGITUDE_DELTA
-  });
+  detectLocation = (coordinate) => {
+      this.setState({
+        region: {
+          latitude: coordinate.latitude,
+          longitude: coordinate.longitude,
+          latitudeDelta: 2.0922,
+          longitudeDelta: 2.0421
+        }
+      })
+  }
 
   requestLocation = () => {
     try {
-      PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-        {
-          title: 'I need your location',
-          buttonNegative: 'Cancel',
-          buttonPositive: 'OK',
-        }
-      ).then(result => result == PermissionsAndroid.RESULTS.GRANTED ? console.warn('granted') : console.warn('not granted')) 
+      PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
+        .then(result => result == PermissionsAndroid.RESULTS.GRANTED ? console.warn('granted') : console.warn('not granted')) 
     } catch(err) {
       console.warn(err);
     }
@@ -62,12 +63,22 @@ class App extends React.Component {
         <MapView
           provider={PROVIDER_GOOGLE}
           style={styles.map}
-          region={this.setMapRegion()} >  
+          region={this.state.region}
+          showsUserLocation={true}
+          onUserLocationChange={ locationChanged => this.detectLocation(locationChanged.nativeEvent.coordinate)}>
+            <Marker
+              coordinate={this.state.region}
+              title="DENEME"
+            /> 
         </MapView>
       </View>
     );
   }
 }
+
+Radar.on('location', result => {
+  console.warn(result.location);
+})
 
 const styles = StyleSheet.create({
   container: {
