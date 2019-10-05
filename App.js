@@ -10,9 +10,10 @@ class App extends React.Component {
       region: {
         latitude: 41.020912,
         longitude: 28.934603,
-        latitudeDelta: 2.0922,
-        longitudeDelta: 2.0421
-      }
+        latitudeDelta: 1.0922,
+        longitudeDelta: 1.0421
+      },
+      locations: [], 
     }
   };
   
@@ -30,14 +31,22 @@ class App extends React.Component {
             longitude: result.user.geofences.longitude,
             latitude: result.user.geofences.latitude
           }
-        }, console.warn(this.state.region))
-        console.warn(result.user.geofences)
+        })
       }).catch((err) => {
         console.warn(err)
       });
+      Radar.startTracking();
   }
+ 
+  /*
+  addLocation = (coordinate) => {
+    this.setState({
+      locations: [...this.state.location, coordinate],
+    })
+  }
+  */
 
-  detectLocation = (coordinate) => {
+  detectLocation = coordinate => {
       this.setState({
         region: {
           latitude: coordinate.latitude,
@@ -56,7 +65,7 @@ class App extends React.Component {
       console.warn(err);
     }
   }
-
+  
   render() {
     return(
       <View style={styles.container}>
@@ -76,8 +85,10 @@ class App extends React.Component {
   }
 }
 
+const app = new App();
+
 Radar.on('location', result => {
-  console.warn(result.location);
+  console.warn(result.location)
 })
 
 const styles = StyleSheet.create({
