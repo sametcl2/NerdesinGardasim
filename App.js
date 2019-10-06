@@ -24,27 +24,20 @@ class App extends React.Component {
       Radar.setUserId(this.state.userId);
       Radar.requestPermissions(true);
   
-      Radar.trackOnce().then((result) => {
-        this.setState({
-          region: {
-            ...this.state.region,
-            longitude: result.user.geofences.longitude,
-            latitude: result.user.geofences.latitude
-          }
-        })
-      }).catch((err) => {
-        console.warn(err)
-      });
+      Radar.trackOnce()
+        .then((result) => {
+          this.setState({
+            region: {
+              ...this.state.region,
+              longitude: result.user.geofences.longitude,
+              latitude: result.user.geofences.latitude
+            }
+          })
+        }).catch((err) => {
+          console.warn(err)
+        });
       Radar.startTracking();
   }
- 
-  /*
-  addLocation = (coordinate) => {
-    this.setState({
-      locations: [...this.state.location, coordinate],
-    })
-  }
-  */
 
   detectLocation = coordinate => {
       this.setState({
@@ -74,7 +67,7 @@ class App extends React.Component {
           style={styles.map}
           region={this.state.region}
           showsUserLocation={true}
-          onUserLocationChange={ locationChanged => this.detectLocation(locationChanged.nativeEvent.coordinate)}>
+          onUserLocationChange={ locationChanged => this.detectLocation(locationChanged.nativeEvent.coordinate)} >
             <Marker
               coordinate={this.state.region}
               title="DENEME"
@@ -84,8 +77,6 @@ class App extends React.Component {
     );
   }
 }
-
-const app = new App();
 
 Radar.on('location', result => {
   console.warn(result.location)
