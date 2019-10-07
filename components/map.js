@@ -107,7 +107,7 @@ const AppContainer = createAppContainer(
         activeTintColor: '#F8F8F8',  
         inactiveTintColor: '#586589',  
         style: {
-            backgroundColor: '#052555' 
+            backgroundColor: '#2E3A59' 
         }
       },
     }
