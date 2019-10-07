@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, PermissionsAndroid, Text} from 'react-native';
+import { View, StyleSheet, PermissionsAndroid } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import Radar from 'react-native-radar';
 import { createAppContainer } from 'react-navigation';
