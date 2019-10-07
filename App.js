@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import SignIn from './components/signIn';
+import Map from './components/map';
 import { createAppContainer } from 'react-navigation';
-
-const AppContainer = createAppContainer(TabNavigator);
+import AppContainer from './components/map';
 
 const App = () => {  
   return(

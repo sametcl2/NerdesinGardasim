@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, PermissionsAndroid} from 'react-native';
+import { View, StyleSheet, PermissionsAndroid, Text} from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import Radar from 'react-native-radar';
 import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs'; 
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Friends from './friends';
 
 const Map = () => {
@@ -34,7 +34,7 @@ const Map = () => {
           });
 
         Radar.startTracking();
-    });
+    }, []); // By passing an empty array as the second parameter to the useEffect Hook, it will work only in mount and unmount. 
   
     detectLocation = coordinate => {
         setRegion({
@@ -54,34 +54,64 @@ const Map = () => {
       }
     }
 
-    return(
+    return (
     <View style={styles.container}>
         <MapView
             provider={PROVIDER_GOOGLE}
             style={styles.map}
             region={region}
             showsUserLocation={true}
-            onUserLocationChange={ locationChanged => this.detectLocation(locationChanged.nativeEvent.coordinate)} >
+            onUserLocationChange={ locationChanged => this.detectLocation(locationChanged.nativeEvent.coordinate) }>
             <Marker
-                coordinate={region}
-                title="DENEME"
+              coordinate={region}
+              title="DENEME"
             /> 
         </MapView>
     </View>
     );
-  }
+}
   
-  Radar.on('location', result => {
-    console.warn(result.location)
-  })
-  
-  const styles = StyleSheet.create({
-    container: {
-      ...StyleSheet.absoluteFillObject,
+Radar.on('location', result => {
+  console.warn(result.location)
+})
+
+const styles = StyleSheet.create({
+  container: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject,
+  },
+});
+
+const AppContainer = createAppContainer(
+  createBottomTabNavigator(
+    {
+      Map: {
+        screen: Map,
+        navigationOptions: () => ({
+          tabBarIcon: ({tintColor}) => <Icon name="map-marker" color={tintColor} size={34}/>
+        })
+      },
+      Friends: {
+        screen: Friends,
+        navigationOptions: () => ({
+          tabBarIcon: ({tintColor}) => <Icon name="account-search" color={tintColor} size={34}/>
+        })
+      }
     },
-    map: {
-      ...StyleSheet.absoluteFillObject,
-    },
-   });
-  
-  export default createAppContainer(TabNavigator);
+    {
+      tabBarOptions: {
+        initialRouteName: 'Map',
+        showLabel: false, 
+        activeTintColor: '#F8F8F8',  
+        inactiveTintColor: '#586589',  
+        style: {
+            backgroundColor: '#052555' 
+        }
+      },
+    }
+  )
+)
+
+export default AppContainer; 

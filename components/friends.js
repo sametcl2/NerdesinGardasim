@@ -8,3 +8,5 @@ const Friends = () => {
         </View>
     );
 }
+
+export default Friends;
