@@ -12,6 +12,7 @@ import java.util.List;
 import io.radar.sdk.Radar;
 
 import com.airbnb.android.react.maps.MapsPackage; 
+import com.airbnb.android.react.lottie.LottiePackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -30,6 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
           // packages.add(new MyReactNativePackage());
 
           packages.add(new MapsPackage());
+          packages.add(new LottiePackage());
 
           return packages;
         }

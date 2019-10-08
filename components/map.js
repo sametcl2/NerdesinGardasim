@@ -6,7 +6,7 @@ import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs'; 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Friends from './friends';
-import { MAP_STYLE } from '../map_style';
+import { MAP_STYLE } from '../src/map_style';
 
 const Map = () => {
 
@@ -58,18 +58,18 @@ const Map = () => {
     return (
     <View style={styles.container}>
       <StatusBar hidden={true}/>
-        <MapView
-            provider={PROVIDER_GOOGLE}
-            style={styles.map}
-            region={region}
-            customMapStyle={MAP_STYLE}
-            showsUserLocation={true}
-            onUserLocationChange={ locationChanged => this.detectLocation(locationChanged.nativeEvent.coordinate) }>
-            <Marker
-              coordinate={region}
-              title="DENEME"
-            /> 
-        </MapView>
+      <MapView
+          provider={PROVIDER_GOOGLE}
+          style={styles.map}
+          region={region}
+          customMapStyle={MAP_STYLE}
+          showsUserLocation={true}
+          onUserLocationChange={ locationChanged => this.detectLocation(locationChanged.nativeEvent.coordinate) }>
+          <Marker
+            coordinate={region}
+            title="DENEME"
+          /> 
+      </MapView>
     </View>
     );
 }

@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@eva-design/eva": "^1.2.0",
+    "lottie-react-native": "^3.2.1",
     "react": "16.9.0",
     "react-native": "0.61.1",
     "react-native-gesture-handler": "^1.4.1",
