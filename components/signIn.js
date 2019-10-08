@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, StatusBar } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { mapping, dark } from '@eva-design/eva';
@@ -13,6 +13,7 @@ navigationOptions = {  // NAVİGATİON'DA HEADER GİZLEMEK İÇİN.
 const SignIn = props => {    
     return (
         <ApplicationProvider mapping={mapping} theme={dark}>
+            <StatusBar hidden={true}/>
             <Layout style={styles.container}>
                 <Text style={styles.text} category='h4'>Deneme</Text>
                 <Button onPress={() => props.navigation.navigate('Map')}>Button</Button>
