@@ -10,52 +10,51 @@ import { MAP_STYLE } from '../src/map_style';
 
 const Map = () => {
 
-    const [region, setRegion] = useState({
-        latitude: 41.020912,
-        longitude: 28.934603,
-        latitudeDelta: 1.0922,
-        longitudeDelta: 1.0421
-      });
-    
-    useEffect(() => {
-        Radar.getPermissionsStatus()
-        .then(status => status == 'DENIED' && this.requestPermission());
-
-        Radar.requestPermissions(true);    
-        
-        Radar.trackOnce()
-          .then((result) => {
-            setRegion({
-                ...region,
-                longitude: result.user.geofences.longitude,
-                latitude: result.user.geofences.latitude
-            })
-          }).catch((err) => {
-            console.warn(err)
+  const [region, setRegion] = useState({
+      latitude: 0,
+      longitude: 0,
+      latitudeDelta: 1.0922,
+      longitudeDelta: 1.0421
+    });
+  
+  useEffect(() => {
+      Radar.getPermissionsStatus()
+      .then(status => status == 'DENIED' && this.requestPermission());
+      
+      Radar.trackOnce()
+        .then((result) => {
+          setRegion({
+              latitude: result.user.geofences.latitude != null ? result.user.geofences.latitude : 0,
+              longitude: result.user.geofences.longitude != null ? result.user.geofences.longitude : 0,
+              latitudeDelta: 1.0922,
+              longitudeDelta: 1.0421
           });
+          console.warn(result.user.geofences)
+        }).catch((err) => {
+          console.warn(err)
+      });
+      Radar.startTracking();
+  }, []); // By passing an empty array as the second parameter to the useEffect Hook, it will work only in mount and unmount. 
 
-        Radar.startTracking();
-    }, []); // By passing an empty array as the second parameter to the useEffect Hook, it will work only in mount and unmount. 
-  
-    detectLocation = coordinate => {
-        setRegion({
-            latitude: coordinate.latitude,
-            longitude: coordinate.longitude,
-            latitudeDelta: 2.0922,
-            longitudeDelta: 2.0421
-        });
-    }
-  
-    requestPermission = () => {
-      try {
-        PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
-          .then(result => result == PermissionsAndroid.RESULTS.GRANTED ? console.warn('granted') : console.warn('not granted')) 
-      } catch(err) {
-        console.warn(err);
-      }
-    }
+  detectLocation = coordinate => {
+      setRegion({
+          latitude: coordinate.latitude,
+          longitude: coordinate.longitude,
+          latitudeDelta: 1.0922,
+          longitudeDelta: 1.0421
+      });
+  }
 
-    return (
+  requestPermission = () => {
+    try {
+      PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
+        .then(result => result == PermissionsAndroid.RESULTS.GRANTED ? console.warn('granted') : console.warn('not granted')) 
+    } catch(err) {
+      console.warn(err);
+    }
+  }
+
+  return (
     <View style={styles.container}>
       <StatusBar hidden={true}/>
       <MapView
@@ -64,14 +63,14 @@ const Map = () => {
           region={region}
           customMapStyle={MAP_STYLE}
           showsUserLocation={true}
-          onUserLocationChange={ locationChanged => this.detectLocation(locationChanged.nativeEvent.coordinate) }>
+          onUserLocationChange={locationChanged => this.detectLocation(locationChanged.nativeEvent.coordinate)}>
           <Marker
             coordinate={region}
             title="DENEME"
           /> 
       </MapView>
     </View>
-    );
+  );
 }
   
 Radar.on('location', result => {
@@ -85,6 +84,16 @@ const styles = StyleSheet.create({
   map: {
     ...StyleSheet.absoluteFillObject,
   },
+  spinner: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  lottie:{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 400,
+    width: 400
+  }
 });
 
 const AppContainer = createAppContainer(
@@ -117,4 +126,4 @@ const AppContainer = createAppContainer(
   )
 )
 
-export default AppContainer; 
+export default AppContainer;

@@ -34,6 +34,10 @@ target 'NerdesinGardasim' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
+  pod 'RNSnackbar', :path => '../node_modules/react-native-snackbar'
+
+  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
+
   target 'NerdesinGardasimTests' do
     inherit! :search_paths
     # Pods for testing

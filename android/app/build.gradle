@@ -179,6 +179,8 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-linear-gradient')
+    implementation project(':react-native-snackbar')
     implementation(project(':react-native-maps'))
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
@@ -187,6 +189,8 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha02'
     //lottie
     implementation project(':lottie-react-native')
+    implementation project(':react-native-linear-gradient')
+    
     
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
