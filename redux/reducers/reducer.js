@@ -14,6 +14,8 @@ const addlocation = (state = initialStates.locations, action) => {
     switch(action.type) {
         case 'ADD_LOCATION' : 
             return [...state, action.location]
+        default:
+            return state
     }
 }
 
@@ -21,17 +23,21 @@ const lastLocations = (state = initialStates.lastLocation, action) => {
     switch(action.type) {
         case 'CURRENT_LOCATION' : 
             return {
-                lastLocation: action.location
+                state: action.location
             }
+        default:
+            return state
     }
 }
 
-const addUser = (state, action) => {
+const addUser = (state = initialStates.newUser, action) => {
     switch(action.type) {
         case 'ADD_USER' :
             return {
-                newUser = {...action.users}
+                state: {...action}
             }
+        default:
+            return state
     }
 }
 

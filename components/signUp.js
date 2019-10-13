@@ -5,7 +5,7 @@ import { ApplicationProvider, Layout, Button, Input } from 'react-native-ui-kitt
 import { connect } from 'react-redux';
 import { addUser } from '../redux/actions/action';
 
-const SignUp = () => {
+const SignUp = props => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -23,12 +23,6 @@ const SignUp = () => {
         setFullName(e);
     }
 
-    mapDispathToProps = dispatch => { // REACT-REDUX
-        return {
-            addUser: user => dispatch(addUser(user))
-        }
-    }
-
     return (
         <ApplicationProvider mapping={mapping} theme={dark}>
             <StatusBar hidden={true}/>
@@ -39,7 +33,7 @@ const SignUp = () => {
                             value={email}
                             onChangeText={onEmailChange}
                             placeholder="Email"
-                            status={email.includes('@') ? 'success' : 'danger'}
+                            status={email.includes('@') ? 'primary' : 'danger'}
                             caption={email.includes('@') ? '' : 'Invalid value'}
                             style={{width: '100%', marginBottom: 20}}
                         />
@@ -48,7 +42,7 @@ const SignUp = () => {
                             onChangeText={onPasswordChange}
                             placeholder="Password"
                             secureTextEntry={true}
-                            status={password.length >= 5 ? 'success' : 'danger'}
+                            status={password.length >= 5 ? 'primary' : 'danger'}
                             caption={password.length >= 5 ? '' : 'Invalid value'}
                             style={{width: '100%', marginBottom: 20}}
                         />
@@ -63,7 +57,7 @@ const SignUp = () => {
                         size="giant"
                         status="warning"
                         style={{marginBottom: 30 ,width: '50%'}}
-                        onPress={props.addUser({
+                        onPress={() => props.addUser({
                             email,
                             password,
                             fullname
@@ -74,6 +68,12 @@ const SignUp = () => {
             </Layout>
         </ApplicationProvider>
     );
+}
+
+mapDispatchToProps = dispatch => { // REACT-REDUX
+    return {
+        addUser: user => dispatch(addUser(user))
+    }
 }
 
 const styles= StyleSheet.create({
@@ -90,4 +90,4 @@ const styles= StyleSheet.create({
     },
 });
 
-export default connect(null, mapDispathToProps)(SignUp);
+export default connect(null, mapDispatchToProps)(SignUp);
