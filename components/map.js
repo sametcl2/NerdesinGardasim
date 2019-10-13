@@ -3,6 +3,7 @@ import { View, StyleSheet, PermissionsAndroid, StatusBar } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import Radar from 'react-native-radar';
 import { createAppContainer } from 'react-navigation';
+import Snackbar from 'react-native-snackbar';
 import { createBottomTabNavigator } from 'react-navigation-tabs'; 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Friends from './friends';
@@ -16,6 +17,7 @@ const Map = () => {
       latitudeDelta: 1.0922,
       longitudeDelta: 1.0421
     });
+  const [load, setLoad] = useState(false);
   
   useEffect(() => {
       Radar.getPermissionsStatus()
@@ -29,9 +31,18 @@ const Map = () => {
               latitudeDelta: 1.0922,
               longitudeDelta: 1.0421
           });
+          setLoad(true);
           console.warn(result.user.geofences)
         }).catch((err) => {
-          console.warn(err)
+          Snackbar.show({
+            title: `${err}`,
+            duration: Snackbar.LENGTH_INDEFINITE,
+            backgroundColor: 'white',
+            action: {
+              title: 'TAP TO CLOSE',
+              color: 'black',
+            }
+          })
       });
       Radar.startTracking();
   }, []); // By passing an empty array as the second parameter to the useEffect Hook, it will work only in mount and unmount. 
@@ -64,10 +75,13 @@ const Map = () => {
           customMapStyle={MAP_STYLE}
           showsUserLocation={true}
           onUserLocationChange={locationChanged => this.detectLocation(locationChanged.nativeEvent.coordinate)}>
-          <Marker
-            coordinate={region}
-            title="DENEME"
-          /> 
+          {
+            load ?
+            <Marker
+              coordinate={region}
+              title="DENEME"
+            /> : null
+          }
       </MapView>
     </View>
   );

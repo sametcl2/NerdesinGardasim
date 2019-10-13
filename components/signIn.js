@@ -6,6 +6,7 @@ import { mapping, dark } from '@eva-design/eva';
 import { ApplicationProvider, Layout, Button, Input } from 'react-native-ui-kitten';
 import LottieView from 'lottie-react-native';
 import Map from './map';
+import SignUp from './signUp';
 
 const SignIn = props => {
     
@@ -36,14 +37,21 @@ const SignIn = props => {
                             value={password}
                             onChangeText={onPasswordChange}
                             placeholder="Password"
+                            secureTextEntry={true}
                             style={{width: '100%', marginBottom: 20}}
                         />
                     </Layout> 
                     <Button
                         onPress={() => props.navigation.navigate('Map')}
                         size="giant"
-                        style={{marginBottom: 150, width: '50%'}}> Sign In
-                    </Button> 
+                        style={{marginBottom: 30 ,width: '50%'}}> Sign In
+                    </Button>
+                    <Button
+                        onPress={() => props.navigation.navigate('SignUp')}
+                        size="giant"
+                        appearance="outline"
+                        style={{marginBottom: 60, width: '50%'}}> Sign Up
+                    </Button>  
                     <LottieView
                         style={styles.lottie}
                         source={require('../src/signInAnimation.json')}
@@ -61,6 +69,7 @@ const AppNavigator = createAppContainer(
     {
         SignIn,
         Map,
+        SignUp,
     },
     {
         initialRouteName: 'SignIn',

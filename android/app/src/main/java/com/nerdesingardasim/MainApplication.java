@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
-import com.BV.LinearGradient.LinearGradientPackage;
 import com.azendoo.reactnativesnackbar.SnackbarPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -15,7 +14,6 @@ import io.radar.sdk.Radar;
 
 import com.airbnb.android.react.maps.MapsPackage; 
 import com.airbnb.android.react.lottie.LottiePackage;
-import com.BV.LinearGradient.LinearGradientPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -35,7 +33,6 @@ public class MainApplication extends Application implements ReactApplication {
 
           packages.add(new MapsPackage());
           packages.add(new LottiePackage());
-          packages.add(new LinearGradientPackage());
 
           return packages;
         }
