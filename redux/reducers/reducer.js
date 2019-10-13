@@ -3,6 +3,18 @@ import { combineReducers } from 'redux';
 const initialStates= {
     locations: [],
     lastLocation: {},
+    newUser: {
+        email: '',
+        password: '',
+        fullName: ''
+    },
+}
+
+const addlocation = (state = initialStates.locations, action) => {
+    switch(action.type) {
+        case 'ADD_LOCATION' : 
+            return [...state, action.location]
+    }
 }
 
 const lastLocations = (state = initialStates.lastLocation, action) => {
@@ -14,16 +26,19 @@ const lastLocations = (state = initialStates.lastLocation, action) => {
     }
 }
 
-const addlocation = (state = initialStates.locations, action) => {
+const addUser = (state, action) => {
     switch(action.type) {
-        case 'ADD_LOCATION' : 
-            return [...state, action.location]
+        case 'ADD_USER' :
+            return {
+                newUser = {...action.users}
+            }
     }
 }
 
-const reducers = combineReducers({
+const Reducers = combineReducers({
     lastLocations,
-    addlocation
+    addlocation,
+    addUser
 });
 
-export default reducers;
+export default Reducers;

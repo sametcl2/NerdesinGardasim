@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { StyleSheet, StatusBar } from 'react-native';
 import { mapping, dark } from '@eva-design/eva';
 import { ApplicationProvider, Layout, Button, Input } from 'react-native-ui-kitten';
+import { connect } from 'react-redux';
+import { addUser } from '../redux/actions/action';
 
 const SignUp = () => {
 
@@ -19,6 +21,12 @@ const SignUp = () => {
 
     onFullNameChange = e => {
         setFullName(e);
+    }
+
+    mapDispathToProps = dispatch => { // REACT-REDUX
+        return {
+            addUser: user => dispatch(addUser(user))
+        }
     }
 
     return (
@@ -53,7 +61,14 @@ const SignUp = () => {
                     </Layout> 
                     <Button
                         size="giant"
-                        style={{marginBottom: 30 ,width: '50%'}}> Begin
+                        status="warning"
+                        style={{marginBottom: 30 ,width: '50%'}}
+                        onPress={props.addUser({
+                            email,
+                            password,
+                            fullname
+                        })}>
+                        Welcome!
                     </Button>
                 </Layout>
             </Layout>
@@ -75,4 +90,4 @@ const styles= StyleSheet.create({
     },
 });
 
-export default SignUp;
+export default connect(null, mapDispathToProps)(SignUp);

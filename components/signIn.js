@@ -44,13 +44,15 @@ const SignIn = props => {
                     <Button
                         onPress={() => props.navigation.navigate('Map')}
                         size="giant"
-                        style={{marginBottom: 30 ,width: '50%'}}> Sign In
+                        style={{marginBottom: 30 ,width: '50%'}}>
+                        Sign In
                     </Button>
                     <Button
                         onPress={() => props.navigation.navigate('SignUp')}
                         size="giant"
                         appearance="outline"
-                        style={{marginBottom: 60, width: '50%'}}> Sign Up
+                        style={{marginBottom: 60, width: '50%'}}>
+                        Sign Up
                     </Button>  
                     <LottieView
                         style={styles.lottie}
