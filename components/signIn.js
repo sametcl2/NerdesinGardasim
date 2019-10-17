@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, StatusBar } from 'react-native';
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
 import { mapping, dark } from '@eva-design/eva';
 import { ApplicationProvider, Layout, Button, Input } from 'react-native-ui-kitten';
 import LottieView from 'lottie-react-native';
-import Map from './map';
-import SignUp from './signUp';
 
 const SignIn = props => {
     
@@ -66,22 +62,6 @@ const SignIn = props => {
     );
 }
 
-const AppNavigator = createAppContainer(
-    createStackNavigator(
-    {
-        SignIn,
-        Map,
-        SignUp,
-    },
-    {
-        initialRouteName: 'SignIn',
-        headerMode: 'none',  // Header gizlemek için
-        navigationOptions: { // Header gizlemek için
-            headerVisible: false, 
-        }
-    }
-));
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -100,4 +80,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default AppNavigator;
+export default SignIn;

@@ -12,9 +12,9 @@ export const addLocation = location => {
     }
 }
 
-export const addUser = users => {
+export const addUser = user => {
     return {
         type: 'ADD_USER',
-        users
+        user
     }
 }

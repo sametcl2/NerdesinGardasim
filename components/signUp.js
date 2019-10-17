@@ -9,18 +9,30 @@ const SignUp = props => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [fullname, setFullName] = useState('');
+    const [fullName, setFullName] = useState('');
     
     onEmailChange = e => {
-        setEmail(e);
+        setEmail(e.nativeEvent.text);
     }
 
     onPasswordChange = e => {
-        setPassword(e);
+        setPassword(e.nativeEvent.text);
     }
 
     onFullNameChange = e => {
-        setFullName(e);
+        setFullName(e.nativeEvent.text);
+    }
+
+    reduxController = () => {
+        const newUser = {
+            email,
+            password,
+            fullName
+        };
+        props.addUser(newUser);
+        setEmail('');
+        setPassword('');
+        setFullName('');
     }
 
     return (
@@ -31,7 +43,7 @@ const SignUp = props => {
                     <Layout style={{marginBottom: 50}}>
                         <Input 
                             value={email}
-                            onChangeText={onEmailChange}
+                            onChange={onEmailChange}
                             placeholder="Email"
                             status={email.includes('@') ? 'primary' : 'danger'}
                             caption={email.includes('@') ? '' : 'Invalid value'}
@@ -39,7 +51,7 @@ const SignUp = props => {
                         />
                         <Input 
                             value={password}
-                            onChangeText={onPasswordChange}
+                            onChange={onPasswordChange}
                             placeholder="Password"
                             secureTextEntry={true}
                             status={password.length >= 5 ? 'primary' : 'danger'}
@@ -47,8 +59,8 @@ const SignUp = props => {
                             style={{width: '100%', marginBottom: 20}}
                         />
                         <Input 
-                            value={fullname}
-                            onChangeText={onFullNameChange}
+                            value={fullName}
+                            onChange={onFullNameChange}
                             placeholder="Full Name"
                             style={{width: '100%', marginBottom: 20}}
                         />
@@ -57,11 +69,7 @@ const SignUp = props => {
                         size="giant"
                         status="warning"
                         style={{marginBottom: 30 ,width: '50%'}}
-                        onPress={() => props.addUser({
-                            email,
-                            password,
-                            fullname
-                        })}>
+                        onPress={reduxController}>
                         Welcome!
                     </Button>
                 </Layout>
@@ -70,10 +78,18 @@ const SignUp = props => {
     );
 }
 
-mapDispatchToProps = dispatch => { // REACT-REDUX
+const mapStateToProps = state => {
     return {
-        addUser: user => dispatch(addUser(user))
-    }
+        user: state.user
+    };
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        addUser: user => {
+            dispatch(addUser(user));
+        }
+    };
 }
 
 const styles= StyleSheet.create({
@@ -90,4 +106,4 @@ const styles= StyleSheet.create({
     },
 });
 
-export default connect(null, mapDispatchToProps)(SignUp);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

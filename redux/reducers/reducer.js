@@ -1,50 +1,29 @@
-import { combineReducers } from 'redux';
-
 const initialStates= {
+    lastLocation: null,
     locations: [],
-    lastLocation: {},
-    newUser: {
-        email: '',
-        password: '',
-        fullName: ''
-    },
+    user: {}
 }
 
-const addlocation = (state = initialStates.locations, action) => {
-    switch(action.type) {
-        case 'ADD_LOCATION' : 
-            return [...state, action.location]
-        default:
-            return state
-    }
-}
-
-const lastLocations = (state = initialStates.lastLocation, action) => {
-    switch(action.type) {
-        case 'CURRENT_LOCATION' : 
+const reducer = (state = initialStates, action) => {
+    switch (action.type) {
+        case "CURRENT_LOCATION": 
             return {
-                state: action.location
+                ...state,
+                lastLocation: action.location
+            }
+        case "ADD_LOCATION": 
+            return {
+                ...state,
+                locations: [...locations, action.location]                
+            }
+        case "ADD_USER": 
+            return {
+                ...state,
+                user: {...action.user}
             }
         default:
-            return state
+            return state;
     }
 }
 
-const addUser = (state = initialStates.newUser, action) => {
-    switch(action.type) {
-        case 'ADD_USER' :
-            return {
-                state: {...action}
-            }
-        default:
-            return state
-    }
-}
-
-const Reducers = combineReducers({
-    lastLocations,
-    addlocation,
-    addUser
-});
-
-export default Reducers;
+export default reducer;

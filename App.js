@@ -1,11 +1,15 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import AppNavigator from './components/signIn';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import Reducers from './redux/reducers/reducer';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import reducer from './redux/reducers/reducer';
+import SignUp from './components/signUp';
+import SignIn from './components/signIn';
+import Map from './components/map';
 
-const store = createStore(Reducers); 
+const store = createStore(reducer); 
 
 const App = () => {  
   return ( 
@@ -16,6 +20,22 @@ const App = () => {
     </View>
   );
 }
+
+const AppNavigator = createAppContainer(
+  createStackNavigator(
+  {
+      SignIn,
+      Map,
+      SignUp,
+  },
+  {
+      initialRouteName: 'SignIn',
+      headerMode: 'none',  // Header gizlemek için
+      navigationOptions: { // Header gizlemek için
+          headerVisible: false, 
+      }
+  }
+));
 
 const styles = StyleSheet.create({
   container: {

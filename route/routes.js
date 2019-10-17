@@ -1,15 +1,6 @@
-import { createStore } from 'redux';
-import Reducers from '../redux/reducers/reducer';
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
-
-mapStateToProps = state => {
-    return {
-        newUser: state.newUser
-    }
-}
 
 const connection = mysql.createConnection({
     host: '127.0.0.1',
