@@ -4,6 +4,7 @@ import { mapping, dark } from '@eva-design/eva';
 import { ApplicationProvider, Layout, Button, Input } from 'react-native-ui-kitten';
 import { connect } from 'react-redux';
 import { addUser } from '../redux/actions/action';
+import Map from '../components/map';
 
 const SignUp = props => {
 
@@ -33,6 +34,7 @@ const SignUp = props => {
         setEmail('');
         setPassword('');
         setFullName('');
+        props.navigation.navigate('Map');
     }
 
     return (
@@ -78,12 +80,6 @@ const SignUp = props => {
     );
 }
 
-const mapStateToProps = state => {
-    return {
-        user: state.user
-    };
-}
-
 const mapDispatchToProps = dispatch => {
     return {
         addUser: user => {
@@ -106,4 +102,4 @@ const styles= StyleSheet.create({
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
+export default connect(null, mapDispatchToProps)(SignUp);
