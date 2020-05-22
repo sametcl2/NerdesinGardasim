@@ -2,4 +2,10 @@
 
 İnsanların, arkadaş olarak ekledikleri kişilerin anlık lokasyonlarını görüntüleyebileceği React Native kullanılarak oluşturulmuş bir mobil uygulama
 
-# _GELİŞTİRME AŞAMASINDA_
+### Eklenmesi Planlanan Özellikler
+
+- [ ] Arkadaş Ekleyip Onların Lokasyonunu Görme
+- [ ] UI Geliştirme
+- [ ] Chat
+
+## _GELİŞTİRME AŞAMASINDA_
