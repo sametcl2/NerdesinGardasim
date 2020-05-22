@@ -3,11 +3,11 @@ import { StyleSheet, StatusBar } from 'react-native';
 import { mapping, dark } from '@eva-design/eva';
 import { ApplicationProvider, Layout, Button, Input } from 'react-native-ui-kitten';
 import { connect } from 'react-redux';
-import { addUser } from '../redux/actions/action';
-import Map from '../components/map';
+import auth from '@react-native-firebase/auth';
+import database from '@react-native-firebase/database';
+import * as actions from '../redux/actions/action';
 
 const SignUp = props => {
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [fullName, setFullName] = useState('');
@@ -24,17 +24,29 @@ const SignUp = props => {
         setFullName(e.nativeEvent.text);
     }
 
-    reduxController = () => {
-        const newUser = {
-            email,
-            password,
-            fullName
-        };
-        props.addUser(newUser);
-        setEmail('');
-        setPassword('');
-        setFullName('');
-        props.navigation.navigate('Map');
+    createUser = (name, email, password) => {
+            if (props.userUUID !== null) {
+                auth()
+                .createUserWithEmailAndPassword(email.trim(), password)
+                // .then(res => {
+                //     console.log("LOG: "+res.user.uid);
+                //     props.getUUID(auth().currentUser.uid);
+                    props.navigation.navigate('SignIn');
+                    setEmail('');
+                    setPassword('');
+                    setFullName('');
+                // })
+                // .catch(error => {
+                //     console.error(error);
+                // });
+                // database()
+                // .ref('/users/'+ props.userUUID)
+                // .update({
+                //     name: name,
+                //     email: email,
+                //     password: password
+                // })
+            }
     }
 
     return (
@@ -71,7 +83,7 @@ const SignUp = props => {
                         size="giant"
                         status="warning"
                         style={{marginBottom: 30 ,width: '50%'}}
-                        onPress={reduxController}>
+                        onPress={() => createUser(fullName, email, password)}>
                         Welcome!
                     </Button>
                 </Layout>
@@ -80,11 +92,19 @@ const SignUp = props => {
     );
 }
 
+const mapStateToProps = state => {
+    return {
+        userUUID: state.userUUID,
+        user: state.newUser
+    }
+}
+
 const mapDispatchToProps = dispatch => {
     return {
-        addUser: user => {
-            dispatch(addUser(user));
-        }
+        getUUID: id => dispatch({
+            type: actions.USERUUID,
+            id: id
+        }),
     };
 }
 
@@ -102,4 +122,4 @@ const styles= StyleSheet.create({
     },
 });
 
-export default connect(null, mapDispatchToProps)(SignUp);
+export default SignUp /*connect(mapStateToProps, mapDispatchToProps)();*/ 

@@ -1,25 +1,31 @@
+import * as actions from '../actions/action';
+
 const initialStates= {
-    lastLocation: null,
-    locations: [],
-    user: {}
+    newUser:{},
+    userUUID: '',
+    location: {}
 }
 
 const reducer = (state = initialStates, action) => {
     switch (action.type) {
-        case "CURRENT_LOCATION": 
+        case actions.NEWUSER:
             return {
                 ...state,
-                lastLocation: action.location
+                newUser: {
+                    name: action.name,
+                    email: action.email,
+                    password: action.password
+                }
             }
-        case "ADD_LOCATION": 
+        case actions.USERUUID: 
             return {
                 ...state,
-                locations: [...locations, action.location]                
+                userUUID: action.id
             }
-        case "ADD_USER": 
+        case actions.LOCATION: 
             return {
                 ...state,
-                user: {...action.user}
+                location: action.location
             }
         default:
             return state;

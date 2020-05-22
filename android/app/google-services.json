@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "633196404722",
+    "firebase_url": "https://react-hooks-exercise-85130.firebaseio.com",
+    "project_id": "react-hooks-exercise-85130",
+    "storage_bucket": "react-hooks-exercise-85130.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:633196404722:android:69e02ed9f337f5c042556b",
+        "android_client_info": {
+          "package_name": "com.nerdesingardasim"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "633196404722-0r34vaj5tc91q1dujsiud7r6i4h40obn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEy7B6Hli4Gz8hZphz5dg8b_kBZtg_R4o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "633196404722-0r34vaj5tc91q1dujsiud7r6i4h40obn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
